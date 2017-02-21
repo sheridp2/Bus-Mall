@@ -34,3 +34,20 @@ var stuff = [
 //   // console.log(stuff[i].name);
 //   // console.log(stuff[i].src);
 // }
+
+function findRandom(){
+  var tempArray = [];
+  while(tempArray.length < 3){
+    var rand = stuff[Math.floor(Math.random() * stuff.length)].src;
+    if(tempArray.indexOf(rand) === -1){
+      tempArray.push(rand);
+    }
+    console.log(tempArray);
+  }
+}
+findRandom();
+
+var pictureBlock = document.getElementbyId('productPictures');
+function createPictures(){
+
+}
