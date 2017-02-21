@@ -61,6 +61,25 @@ function postPictures(){
 
     console.log(typeof(randomNumArray[i]));
   }
+}
 
+function removePictures(){
+  var pictureEl = document.getElementById('prodcutPictures');
+  var removePicEl = document.getElementByTag('h1');
+  pictureEl.removeChild(removePicEl);
 }
 postPictures();
+
+console.log('-------------------Event Listener click---------------');
+
+var onImageClickEl = document.getElementById('productPictures');
+
+onImageClickEl.addEventListener('click', handleClick);
+
+//event listener not working corectly yet. Needs to delete current picure and add new
+function handleClick(event){
+  event.preventDefault();
+  event.stopPropagation();
+
+  removePictures();
+}
