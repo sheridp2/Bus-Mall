@@ -1,4 +1,5 @@
 'use strict';
+console.log('img/bag.jpg'.name);
 
 var pictureBlockEl = document.getElementById('productPictures');
 var left = document.getElementById('left');
@@ -44,7 +45,7 @@ function findRandom(){
   // var tempArray = [];
   // while(tempArray.length < 3){
     // var rand = stuff[Math.floor(Math.random() * stuff.length)].src;
-  return stuff[Math.floor(Math.random() * stuff.length)].src;
+  return(Math.floor(Math.random() * stuff.length));
 //     if(tempArray.indexOf(rand) === -1){
 //       tempArray.push(rand);
 //     }
@@ -58,40 +59,45 @@ function displayPics(){
   var centerIndex = findRandom();
   var rightIndex = findRandom();
 
-  console.log('starting left index', leftIndex);
-  console.log('starting center index', centerIndex);
-  console.log('starting right index', rightIndex);
+  // console.log('starting left index', leftIndex);
+  // console.log('starting center index', centerIndex);
+  // console.log('starting right index', rightIndex);
 
   while(currentlyShowing.includes(leftIndex)){
     leftIndex = findRandom();
-    console.log('new left', leftIndex);
+    // console.log('new left', leftIndex);
   }
-  while(centerIndex == leftIndex || currentlyShowing.includes(centerIndex)){
+  while(centerIndex === leftIndex || currentlyShowing.includes(centerIndex)){
     centerIndex = findRandom();
-    console.log('new center', centerIndex);
+    // console.log('new center', centerIndex);
   }
   while(rightIndex === leftIndex || rightIndex === centerIndex || currentlyShowing.includes(rightIndex)){
     rightIndex = findRandom();
-    console.log('new right', rightIndex);
+    // console.log('new right', rightIndex);
 
   }
-  currentlyShowing = [leftIndex, centerIndex, rightIndex];
-  console.log(currentlyShowing);
+  console.log(leftIndex, centerIndex, rightIndex);
+  stuff[leftIndex].views ++;
+  stuff[centerIndex].views ++;
+  stuff[rightIndex].views ++;
+  console.log(stuff[3].views, stuff[3].name);
 
   pictureBlockEl.removeChild(left);
   left = document.createElement('img');
-  left.setAttribute('src', currentlyShowing[0]);
+  left.setAttribute('src', stuff[leftIndex].src);
   pictureBlockEl.appendChild(left);
 
   pictureBlockEl.removeChild(center);
   center = document.createElement('img');
-  center.setAttribute('src', currentlyShowing[1]);
+  center.setAttribute('src', stuff[centerIndex].src);
   pictureBlockEl.appendChild(center);
 
   pictureBlockEl.removeChild(right);
   right = document.createElement('img');
-  right.setAttribute('src', currentlyShowing[2]);
+  right.setAttribute('src', stuff[rightIndex].src);
   pictureBlockEl.appendChild(right);
+
+  currentlyShowing = [leftIndex, centerIndex, rightIndex];
 }
 
 displayPics();
@@ -107,12 +113,13 @@ function handleClick(event){
   event.preventDefault();
   event.stopPropagation();
   // console.log(randomNumArray);
+
   if(totalClicks < clickLimit){
-    randomNumArray = [];
+
     findRandom();
     displayPics();
-    console.log('products chosen this round ' + randomNumArray);
     totalClicks ++;
     console.log('click number ' + totalClicks);
+    console.log('currentlyShowing ' + currentlyShowing);
   }
 }
