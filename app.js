@@ -63,11 +63,6 @@ function postPictures(){
   }
 }
 
-function removePictures(){
-  var pictureEl = document.getElementById('prodcutPictures');
-  var removePicEl = document.getElementByTag('h1');
-  pictureEl.removeChild(removePicEl);
-}
 postPictures();
 
 console.log('-------------------Event Listener click---------------');
@@ -81,5 +76,8 @@ function handleClick(event){
   event.preventDefault();
   event.stopPropagation();
 
-  removePictures();
+  console.log(randomNumArray);
+  randomNumArray = [];
+  findRandom();
+  postPictures();
 }
