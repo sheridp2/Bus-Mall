@@ -1,11 +1,21 @@
 'use strict';
 
-var totalClicks = 0;
-var randomNumArray = [];
+var pictureBlockEl = document.getElementById('productPictures');
+var left = document.getElementById('left');
+var center = document.getElementById('center');
+var right = document.getElementById('right');
 
-function RandomPicture(name, src){
+var totalClicks = 0;
+var clickLimit = 25;
+
+var randomNumArray = [];
+var currentlyShowing = [];
+
+function RandomPicture(name, src, clicks, views){
   this.name = name;
   this.src = src;
+  this.clicks = 0;
+  this.views = 0;
 }
 var stuff = [
   new RandomPicture('bag', 'img/bag.jpg'),
@@ -23,49 +33,70 @@ var stuff = [
   new RandomPicture('scissors', 'img/scissors.jpg'),
   new RandomPicture('shark', 'img/shark.jpg'),
   new RandomPicture('sweep', 'img/sweep.png'),
-  new RandomPicture ('tauntaun', 'img/tauntaun.jpg'),
-  new RandomPicture ('unicorn', 'img/unicorn.jpg'),
+  new RandomPicture('tauntaun', 'img/tauntaun.jpg'),
+  new RandomPicture('unicorn', 'img/unicorn.jpg'),
   new RandomPicture('usb', 'img/usb.gif'),
   new RandomPicture('waterCan', 'img/waterCan.jpg'),
   new RandomPicture('wineGlass', 'img/wineGlass.jpg')
 ];
 
-// for(var i = 0; i < stuff.length; i++){
-//   // console.log(stuff[i].name);
-//   // console.log(stuff[i].src);
-// }
-
 function findRandom(){
-  var tempArray = [];
-  while(tempArray.length < 3){
-    var rand = stuff[Math.floor(Math.random() * stuff.length)].src;
-    if(tempArray.indexOf(rand) === -1){
-      tempArray.push(rand);
-    }
-    // console.log(tempArray);
-  }
-  randomNumArray = tempArray;
-}
-findRandom();
-console.log(randomNumArray);
-
-var pictureBlockEl = document.getElementById('productPictures');
-function postPictures(){
-  var pictureEl = document.createElement('h1');
-  pictureBlockEl.appendChild(pictureEl);
-
-  for(var i = 0; i < randomNumArray.length; i++){
-    var addPic = document.createElement('img');
-    addPic.setAttribute('src', randomNumArray[i]);
-    pictureEl.appendChild(addPic);
-
-    console.log(typeof(randomNumArray[i]));
-  }
+  // var tempArray = [];
+  // while(tempArray.length < 3){
+    // var rand = stuff[Math.floor(Math.random() * stuff.length)].src;
+  return stuff[Math.floor(Math.random() * stuff.length)].src;
+//     if(tempArray.indexOf(rand) === -1){
+//       tempArray.push(rand);
+//     }
+//     // console.log(tempArray);
+//   }
+//   randomNumArray = tempArray;
 }
 
-postPictures();
+function displayPics(){
+  var leftIndex = findRandom();
+  var centerIndex = findRandom();
+  var rightIndex = findRandom();
 
-console.log('-------------------Event Listener click---------------');
+  console.log('starting left index', leftIndex);
+  console.log('starting center index', centerIndex);
+  console.log('starting right index', rightIndex);
+
+  while(currentlyShowing.includes(leftIndex)){
+    leftIndex = findRandom();
+    console.log('new left', leftIndex);
+  }
+  while(centerIndex == leftIndex || currentlyShowing.includes(centerIndex)){
+    centerIndex = findRandom();
+    console.log('new center', centerIndex);
+  }
+  while(rightIndex === leftIndex || rightIndex === centerIndex || currentlyShowing.includes(rightIndex)){
+    rightIndex = findRandom();
+    console.log('new right', rightIndex);
+
+  }
+  currentlyShowing = [leftIndex, centerIndex, rightIndex];
+  console.log(currentlyShowing);
+
+  pictureBlockEl.removeChild(left);
+  left = document.createElement('img');
+  left.setAttribute('src', currentlyShowing[0]);
+  pictureBlockEl.appendChild(left);
+
+  pictureBlockEl.removeChild(center);
+  center = document.createElement('img');
+  center.setAttribute('src', currentlyShowing[1]);
+  pictureBlockEl.appendChild(center);
+
+  pictureBlockEl.removeChild(right);
+  right = document.createElement('img');
+  right.setAttribute('src', currentlyShowing[2]);
+  pictureBlockEl.appendChild(right);
+}
+
+displayPics();
+
+console.log('-----------------Event Listener click---------------');
 
 var onImageClickEl = document.getElementById('productPictures');
 
@@ -75,9 +106,13 @@ onImageClickEl.addEventListener('click', handleClick);
 function handleClick(event){
   event.preventDefault();
   event.stopPropagation();
-
-  console.log(randomNumArray);
-  randomNumArray = [];
-  findRandom();
-  postPictures();
+  // console.log(randomNumArray);
+  if(totalClicks < clickLimit){
+    randomNumArray = [];
+    findRandom();
+    displayPics();
+    console.log('products chosen this round ' + randomNumArray);
+    totalClicks ++;
+    console.log('click number ' + totalClicks);
+  }
 }
