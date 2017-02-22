@@ -7,8 +7,9 @@ var right = document.getElementById('right');
 
 var totalClicks = 0;
 var clickLimit = 25;
+var clickTotals = [];
+var viewTotals = [];
 
-var randomNumArray = [];
 var currentlyShowing = [];
 
 function RandomPicture(name, src, clicks, views){
@@ -121,7 +122,7 @@ function handleClick(event){
     displayPics();
 
     totalClicks ++;
-    // console.log('click number ' + totalClicks);
+    console.log('click number ' + totalClicks);
     // console.log('currentlyShowing ' + currentlyShowing);
     for(i = 0; i < stuff.length; i++){
       if(stuff[i].src === targetSrc){
@@ -131,8 +132,46 @@ function handleClick(event){
     }
   } else{
     for(var i = 0; i < stuff.length; i++){
-      console.log('Views of ' + stuff[i].name + ' is ' + stuff[i].views + ' and total clicks is ' + stuff[i].clicks);
-      
+      console.log(stuff[i].clicks);
+      clickTotals.push(stuff[i].clicks);
+      // console.log(totalClicks);
+      // console.log(' Views of ' + stuff[i].name + ' was ' + stuff[i].views + ' and total clicks is ' + stuff[i].clicks);
+      // console.log('When viewed the % chance it will be clicked = ' + Math.floor(stuff[i].clicks) / (stuff[i].views));
     }
   }
+  drawTable();
+}
+
+console.log('-------------------- Bar Graph -------------------');
+function drawTable(){
+  var ctx = document.getElementById('chart').getContext('2d');
+
+  var data = clickTotals;
+
+  var chartData = {
+    type: 'bar',
+    data:{
+      labels: ['Bag', 'Banana', 'Bathroom', 'Boots', 'Breakfast', 'Bubblegum', 'Chair', 'Cthulhu', 'Dog Duck', 'Dragon', 'Pen', 'Pet Sweep', 'Scissors', 'Shark', 'Sweep', 'Tauntaun', 'Unicorn', 'USB', 'Water Can', 'Wine Glass' ],
+      datasets: [{
+        label: '#of Votes/Color',
+        data: data,
+        backgroundColor: ['rgba(255, 0, 0, 1)', 'rgba(255, 50, 0, 1)', 'rgba(255, 100, 0, 1)', 'rgba(255, 150, 0, 1)', 'rgba(255, 200, 0, 1)',
+          'rgba(0, 255, 0, 0)', 'rgba(0, 255, 50, 1)', 'rgba(0, 255, 100, 1)', 'rgba(0, 255, 150, 1)', 'rgba(0, 255, 200, 1)',
+          'rgba(0, 0, 255, 1)', 'rgba(50, 0, 255, 1)', 'rgba(100, 0, 255, 1)', 'rgba(150, 0, 255, 1)', 'rgba(200, 0, 255, 1)',
+          'rgba(255, 100, 100, 1)', 'rgba(100, 255, 100, 1)', 'rgba(100, 100, 255, 1)', 'rgba(125, 125, 125, 1)', 'rgba(40, 100, 140, 1)'
+        ],
+      }],
+    },
+    options:{
+      scales:{
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  };
+
+  var myChart = new Chart(ctx, chartData);
 }
