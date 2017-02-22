@@ -1,5 +1,4 @@
 'use strict';
-console.log('img/bag.jpg'.name);
 
 var pictureBlockEl = document.getElementById('productPictures');
 var left = document.getElementById('left');
@@ -76,11 +75,11 @@ function displayPics(){
     // console.log('new right', rightIndex);
 
   }
-  console.log(leftIndex, centerIndex, rightIndex);
+  // console.log(leftIndex, centerIndex, rightIndex);
   stuff[leftIndex].views ++;
   stuff[centerIndex].views ++;
   stuff[rightIndex].views ++;
-  console.log(stuff[3].views, stuff[3].name);
+  // console.log(stuff[3].views, stuff[3].name);
 
   pictureBlockEl.removeChild(left);
   left = document.createElement('img');
@@ -108,18 +107,32 @@ var onImageClickEl = document.getElementById('productPictures');
 
 onImageClickEl.addEventListener('click', handleClick);
 
-//event listener not working corectly yet. Needs to delete current picure and add new
 function handleClick(event){
+
   event.preventDefault();
   event.stopPropagation();
-  // console.log(randomNumArray);
+
+  var target = event.target;
+  var targetSrc = target.getAttribute('src');
 
   if(totalClicks < clickLimit){
 
     findRandom();
     displayPics();
+
     totalClicks ++;
-    console.log('click number ' + totalClicks);
-    console.log('currentlyShowing ' + currentlyShowing);
+    // console.log('click number ' + totalClicks);
+    // console.log('currentlyShowing ' + currentlyShowing);
+    for(i = 0; i < stuff.length; i++){
+      if(stuff[i].src === targetSrc){
+        stuff[i].clicks ++;
+        // console.log(stuff[i].clicks);
+      }
+    }
+  } else{
+    for(var i = 0; i < stuff.length; i++){
+      console.log('Views of ' + stuff[i].name + ' is ' + stuff[i].views + ' and total clicks is ' + stuff[i].clicks);
+      
+    }
   }
 }
