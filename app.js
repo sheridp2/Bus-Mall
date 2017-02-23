@@ -127,7 +127,7 @@ function handleClick(event){
     for(i = 0; i < stuff.length; i++){
       if(stuff[i].src === targetSrc){
         stuff[i].clicks ++;
-        console.log(stuff.clicks);
+        // console.log(stuff.clicks);
         // console.log(stuff[i].clicks);
       }
     }
