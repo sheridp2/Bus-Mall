@@ -6,8 +6,6 @@ var currentClicks = [];
 var overallClickTotals = [];
 var localClickTotals = [];
 var totalClickData = [];
-console.log(totalClickData);
-console.log();
 
 console.log(localStorage.overallClickTotals);
 // console.log(currentClicks);
