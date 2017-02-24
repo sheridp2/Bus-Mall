@@ -9,11 +9,13 @@ body{
   background-color: white;
   display: inline-block;
   margin: 15px;
+  border: 3px solid black;
+  padding: 5px;
 }
  img{
    height: 250px;
    width: 250px;
-   margin: 15px;
+   margin: 17px;
    border: 3px solid black;
  }
 
@@ -23,14 +25,41 @@ body{
 
 .chartsButton{
   display: inline-block;;
-  background-color: red;
+  background-color: yellow;
   margin: 5px;
   padding: 10px;
-  font-size: 25px;
+  font-size: 40px;
   border: 5px solid black;
   margin: 15px;
+  margin-left: 18px;
+  background: #2db34a;
+  border-radius: 6px;
+  transition: background .2s linear, border-radius 1s ease-in 1s;
+}/* The above and below CSS was taken from the Readings 14, http://learn.shayhowe.com/advanced-html-css/transitions-animations/*/
+.chartsButton:hover {
+  color: #ff7b29;
+  border-radius: 50%;
 }
+
 
 canvas{
   background-color: white;
+}
+
+.returnLink{
+  background-color: white;
+  margin-top: 10px;
+  font-size: 45px;
+  display: inline-block;
+  background-color: yellow;
+  border: 5px solid black;
+  padding: 20px;
+  background: #2db34a;
+  border-radius: 6px;
+  transition: background .2s linear, border-radius 1s ease-in 1s;
+}
+/* The above and below CSS was taken from the Readings 14, http://learn.shayhowe.com/advanced-html-css/transitions-animations/*/
+.returnLink:hover {
+  color: #ff7b29;
+  border-radius: 50%;
 }
