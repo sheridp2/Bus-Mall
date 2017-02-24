@@ -4,25 +4,51 @@ var stuff = JSON.parse(localStorage.stuff);
 // console.log(stuff);
 var currentClicks = [];
 var overallClickTotals = [];
+var localClickTotals = [];
+var totalClickData = [];
+
+console.log(localStorage.overallClickTotals);
+// console.log(currentClicks);
+// console.log(localStorage.overallClickTotals);
 // console.log(overallClickTotals);
 // console.log(allStuffClicks(stuff));
 var currentClicks = allStuffClicks(stuff);
 // console.log(currentClicks);
 
+function addToLocalStorage(){
+  for(var i = 0; i < currentClicks.length; i ++){
+    var cummulClicks =  localClickTotals[i] + currentClicks[i];
+    // console.log('Current',currentClicks);
+    // console.log('Local',localClickTotals);
+    overallClickTotals.push(cummulClicks);
+    // console.log(overallClickTotals);
+  }
+  localStorage.overallClickTotals = JSON.stringify(overallClickTotals);
+  // console.log(localStorage.overallClickTotals);
+}
+//start of how check to see if click totals are in local storage
 function checkForContent(){
-  if (localStorage.overallClickTotals == 0){
+  if (localStorage.overallClickTotals){
+    // console.log('bug null here', localStorage.overallClickTotals);
+    localClickTotals = JSON.parse(localStorage.overallClickTotals);
+    // console.log('localstore overall clicks total', localClickTotals);
+    addToLocalStorage();
+
+  } else{
+    console.log('local storage false', localStorage.overallClickTotals);
     overallClickTotals = currentClicks;
+    console.log('sending right info',overallClickTotals);
     localStorage.overallClickTotals = JSON.stringify(overallClickTotals);
-    console.log(overallClickTotals);
-  // } else{
-  //   for(var i = 0; i < overallClickTotals.length; i ++){
-  //     overallClickTotals[i] += localStorage.overallClickTotals[i];
-  //
+    console.log('overalll click totals', localStorage.overallClickTotals);
   //   }
   }
 }
-checkForContent();
-console.log(overallClickTotals);
+
+// console.log('overallClickTotals', overallClickTotals);
+// console.log('currentClicks', currentClicks);
+
+
+
 
 function allStuffClicks(allStuff){
   var stuffClicks = [];
@@ -31,9 +57,13 @@ function allStuffClicks(allStuff){
     stuffClicks.push(allStuff[i].clicks);
   }
   // console.log('All Stuff Clicks: ', stuffClicks);
+  currentClicks = stuffClicks;
+  // console.log('currentClicks', currentClicks);
   return stuffClicks;
-  stuffClicks = currentClicks;
 }
+
+checkForContent();
+
 function allStuffNames(allStuff){
   var stuffNames = [];
 
@@ -66,7 +96,7 @@ function drawTable(){
       labels: nameData,
       datasets: [{
         label: 'Number of Clicks Per Product',
-        data: clickData,
+        data: overallClickTotals,
         backgroundColor: ['rgba(255, 0, 0, 1)', 'rgba(255, 50, 0, 1)', 'rgba(255, 100, 0, 1)', 'rgba(255, 150, 0, 1)', 'rgba(255, 200, 0, 1)',
           'rgba(0, 255, 0, 0)', 'rgba(0, 255, 50, 1)', 'rgba(0, 255, 100, 1)', 'rgba(0, 255, 150, 1)', 'rgba(0, 255, 200, 1)',
           'rgba(0, 0, 255, 1)', 'rgba(50, 0, 255, 1)', 'rgba(100, 0, 255, 1)', 'rgba(150, 0, 255, 1)', 'rgba(200, 0, 255, 1)',

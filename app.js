@@ -127,7 +127,7 @@ function handleClick(event){
     for(i = 0; i < stuff.length; i++){
       if(stuff[i].src === targetSrc){
         stuff[i].clicks ++;
-        console.log(stuff.clicks);
+        // console.log(stuff.clicks);
         // console.log(stuff[i].clicks);
       }
     }
@@ -139,6 +139,7 @@ function handleClick(event){
       console.log('Views of ' + stuff[i].name + ' was ' + stuff[i].views + ' and total clicks is ' + stuff[i].clicks);
       console.log('When viewed, the % chance it will be clicked = ' + Math.round((stuff[i].clicks) / (stuff[i].views) * 100));
     }
+    showLink();
     saveProductsToLocalStorage(stuff);
   }
   // drawTable();
@@ -147,4 +148,10 @@ function handleClick(event){
 function saveProductsToLocalStorage(stuff){
   localStorage.stuff = JSON.stringify(stuff);
   console.log('saved to localStorage');
+}
+
+function showLink(){
+  var hiddenToNot = document.getElementById('chartsLink');
+  hiddenToNot.removeAttribute('class');
+  hiddenToNot.setAttribute('class', 'chartsButton');
 }
